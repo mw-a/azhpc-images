@@ -15,3 +15,11 @@ echo -e "baseurl=https://packages.microsoft.com/yumrepos/amlfs-${DISTRIB_CODENAM
 echo -e "enabled=1" >> ${REPO_PATH}
 echo -e "gpgcheck=1" >> ${REPO_PATH}
 echo -e "gpgkey=https://packages.microsoft.com/keys/microsoft.asc" >> ${REPO_PATH}
+echo "" >> ${REPO_PATH}
+echo -e "[amlfs-test]" >> ${REPO_PATH}
+echo -e "name=Azure Lustre Packages Test" >> ${REPO_PATH}
+echo -e "baseurl=https://packages.microsoft.com/yumrepos/amlfs-${DISTRIB_CODENAME}-test" >> ${REPO_PATH}
+echo -e "enabled=1" >> ${REPO_PATH}
+echo -e "gpgcheck=1" >> ${REPO_PATH}
+echo -e "gpgkey=https://packages.microsoft.com/keys/microsoft.asc" >> ${REPO_PATH}
+echo -e "exclude=lustre-client-dkms*" >> ${REPO_PATH}

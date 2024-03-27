@@ -1,0 +1,62 @@
+{
+  "type": "Microsoft.VirtualMachineImages",
+  "apiVersion": "2022-02-14",
+  "location": "westeurope",
+  "dependsOn": [],
+  "tags": { },
+  "identity": {
+    "type": "UserAssigned",
+    "userAssignedIdentities": {
+      "/subscriptions/5df6e495-3c4c-4982-85d1-b3a279f4c904/resourcegroups/sc-rg-test-vm-image-builder/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sc-mi-test-vm-image-builder": {}
+    }
+  },
+  "properties": {
+    "buildTimeoutInMinutes": 120,
+    "vmProfile": {
+      "vmSize": "Standard_D16ls_v5",
+      "osDiskSizeGB": 64
+    },
+    "source": {
+      "type": "PlatformImage",
+      "publisher": "RedHat",
+      "offer": "RHEL",
+      "sku": "89-gen2",
+      "version": "latest"
+    },
+    "customize": [
+      {
+        "type": "Shell",
+        "name": "install",
+        "inline": [
+          "sudo sudo lvcreate -L 20G rootvg -n build",
+          "sudo mkfs -t xfs /dev/mapper/rootvg-build",
+          "sudo mkdir -p /build",
+          "sudo mount /dev/mapper/rootvg-build /build",
+          "sudo lvresize -L +12G /dev/mapper/rootvg-rootlv",
+          "sudo fsadm -y resize /dev/mapper/rootvg-rootlv",
+          "sudo lvresize -L +2G /dev/mapper/rootvg-usrlv",
+          "sudo fsadm -y resize /dev/mapper/rootvg-usrlv",
+          "sudo lvresize -L +2G /dev/mapper/rootvg-tmplv",
+          "sudo fsadm -y resize /dev/mapper/rootvg-tmplv",
+          "sudo dnf install -y git",
+          "git clone -b rhel-no-ofed --depth 1 --single-branch https://github.com/mw-a/azhpc-images /build/azhpc-images",
+          "cd /build/azhpc-images/alma/alma-8.x/alma-8.7-hpc && sudo ./install.sh",
+          "cd /",
+          "sudo umount /build",
+          "sudo lvremove -y /dev/mapper/rootvg-build"
+        ]
+      }
+    ],
+    "distribute": [
+      {
+        "type": "SharedImage",
+        "galleryImageId": "/subscriptions/5df6e495-3c4c-4982-85d1-b3a279f4c904/resourceGroups/sc-rg-test-vm-image-builder/providers/Microsoft.Compute/galleries/scigtestvmimagebuilder/images/sc-vi-rhel-hpc",
+        "runOutputName": "sc-dt-test-vm-image-builder-sig",
+        "artifactTags": {},
+        "replicationRegions": [
+          "westeurope"
+        ]
+      }
+    ]
+  }
+}
