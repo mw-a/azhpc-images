@@ -19,14 +19,14 @@ echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib64' | tee -a /e
 $COMMON_DIR/write_component_version.sh "CUDA" ${CUDA_DRIVER_VERSION}
 
 # Download CUDA samples
-TARBALL="v${CUDA_SAMPLES_VERSION}.tar.gz"
-CUDA_SAMPLES_DOWNLOAD_URL=https://github.com/NVIDIA/cuda-samples/archive/refs/tags/${TARBALL}
-$COMMON_DIR/download_and_verify.sh ${CUDA_SAMPLES_DOWNLOAD_URL} ${CUDA_SAMPLES_SHA256}
-tar -xf ${TARBALL}
-pushd ./cuda-samples-${CUDA_SAMPLES_VERSION}
-make -j $(nproc)
-mv -vT ./Samples /usr/local/cuda-${CUDA_DRIVER_VERSION}/samples # Use the same version as the CUDA toolkit as thats where samples is being moved to
-popd
+#TARBALL="v${CUDA_SAMPLES_VERSION}.tar.gz"
+#CUDA_SAMPLES_DOWNLOAD_URL=https://github.com/NVIDIA/cuda-samples/archive/refs/tags/${TARBALL}
+#$COMMON_DIR/download_and_verify.sh ${CUDA_SAMPLES_DOWNLOAD_URL} ${CUDA_SAMPLES_SHA256}
+#tar -xf ${TARBALL}
+#pushd ./cuda-samples-${CUDA_SAMPLES_VERSION}
+#make -j $(nproc)
+#mv -vT ./Samples /usr/local/cuda-${CUDA_DRIVER_VERSION}/samples # Use the same version as the CUDA toolkit as thats where samples is being moved to
+#popd
 
 # Install NVIDIA driver
 nvidia_metadata=$(get_component_config "nvidia")
