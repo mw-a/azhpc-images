@@ -34,7 +34,7 @@ tar -xf ${TARBALL}
 pushd nccl-${NCCL_VERSION}
 make -j $(( $(nproc) - 1 )) src.build
 if [[ $DISTRIBUTION == *"ubuntu"* ]]; then
-    make pkg.debian.build
+    make -j$(nproc) pkg.debian.build
     pushd build/pkg/deb/
     dpkg -i libnccl2_${NCCL_VERSION}+cuda${CUDA_DRIVER_VERSION}_${ARCHITECTURE_DISTRO}.deb
     apt-mark hold libnccl2
@@ -42,7 +42,7 @@ if [[ $DISTRIBUTION == *"ubuntu"* ]]; then
     apt-mark hold libnccl-dev
     popd
 elif [[ $DISTRIBUTION == "azurelinux3.0" ]]; then
-    make pkg.redhat.build
+    make -j$(nproc) pkg.redhat.build
     if [ "$ARCHITECTURE" = "aarch64" ]; then
         dnf install -y ./build/pkg/rpm/aarch64/libnccl-${NCCL_VERSION}+cuda*.aarch64.rpm
         dnf install -y ./build/pkg/rpm/aarch64/libnccl-devel-${NCCL_VERSION}+cuda*.aarch64.rpm
@@ -104,7 +104,7 @@ source /etc/profile.d/modules.sh
 module load mpi/hpcx
 git clone https://github.com/NVIDIA/nccl-tests.git
 pushd nccl-tests
-make MPI=1 MPI_HOME=${HPCX_MPI_DIR} CUDA_HOME=/usr/local/cuda
+make -j$(nproc) MPI=1 MPI_HOME=${HPCX_MPI_DIR} CUDA_HOME=/usr/local/cuda
 popd
 mv nccl-tests /opt/.
 module unload mpi/hpcx
