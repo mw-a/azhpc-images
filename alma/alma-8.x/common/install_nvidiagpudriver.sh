@@ -19,7 +19,7 @@ $COMMON_DIR/write_component_version.sh "CUDA" ${CUDA_DRIVER_VERSION}
 TARBALL="v${CUDA_SAMPLES_VERSION}.tar.gz"
 CUDA_SAMPLES_DOWNLOAD_URL=https://github.com/NVIDIA/cuda-samples/archive/refs/tags/${TARBALL}
 wget ${CUDA_SAMPLES_DOWNLOAD_URL}
-tar -xvf ${TARBALL}
+tar -xf ${TARBALL}
 pushd ./cuda-samples-${CUDA_SAMPLES_VERSION}
 make -j $(nproc)
 mv -vT ./Samples /usr/local/cuda-${CUDA_SAMPLES_VERSION}/samples
@@ -47,7 +47,7 @@ GDRCOPY_VERSION=$(jq -r '.gdrcopy."'"$DISTRIBUTION"'".version' <<< $COMPONENT_VE
 TARBALL="v${GDRCOPY_VERSION}.tar.gz"
 GDRCOPY_DOWNLOAD_URL=https://github.com/NVIDIA/gdrcopy/archive/refs/tags/${TARBALL}
 wget $GDRCOPY_DOWNLOAD_URL
-tar -xvf $TARBALL
+tar -xf $TARBALL
 
 pushd gdrcopy-${GDRCOPY_VERSION}/packages/
 CUDA=/usr/local/cuda ./build-rpm-packages.sh

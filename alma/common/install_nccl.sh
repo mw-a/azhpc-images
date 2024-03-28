@@ -13,7 +13,7 @@ TARBALL="v${NCCL_VERSION}.tar.gz"
 NCCL_DOWNLOAD_URL=https://github.com/NVIDIA/nccl/archive/refs/tags/${TARBALL}
 pushd /tmp
 wget ${NCCL_DOWNLOAD_URL}
-tar -xvf ${TARBALL}
+tar -xf ${TARBALL}
 
 pushd nccl-${NCCL_VERSION}
 make -j src.build

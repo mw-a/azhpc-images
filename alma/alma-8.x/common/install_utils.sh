@@ -90,7 +90,7 @@ azcopy_sha256=$(jq -r '.sha256' <<< $azcopy_metadata)
 tarball="azcopy_linux_amd64_$azcopy_version.tar.gz"
 AZCOPY_DOWNLOAD_URL="https://azcopyvnext.azureedge.net/$azcopy_release/$tarball"
 wget ${AZCOPY_DOWNLOAD_URL}
-tar -xvf ${tarball}
+tar -xf ${tarball}
 
 # copy the azcopy to the bin path
 pushd azcopy_linux_amd64_${azcopy_version}
