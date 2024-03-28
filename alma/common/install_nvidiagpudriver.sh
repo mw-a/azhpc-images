@@ -22,7 +22,7 @@ $COMMON_DIR/write_component_version.sh "CUDA" ${CUDA_DRIVER_VERSION}
 TARBALL="v${CUDA_SAMPLES_VERSION}.tar.gz"
 CUDA_SAMPLES_DOWNLOAD_URL=https://github.com/NVIDIA/cuda-samples/archive/refs/tags/${TARBALL}
 $COMMON_DIR/download_and_verify.sh ${CUDA_SAMPLES_DOWNLOAD_URL} ${CUDA_SAMPLES_SHA256}
-tar -xvf ${TARBALL}
+tar -xf ${TARBALL}
 pushd ./cuda-samples-${CUDA_SAMPLES_VERSION}
 mkdir build && cd build
 cmake -DCMAKE_CUDA_COMPILER=/usr/local/cuda/bin/nvcc ..
