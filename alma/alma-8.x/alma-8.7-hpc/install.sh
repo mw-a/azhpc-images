@@ -29,6 +29,8 @@ $ALMA_COMMON_DIR/install_lustre_client.sh "8"
 # install DOCA OFED
 #$ALMA_COMMON_DIR/install_doca.sh
 
+./install_rhelofed.sh
+
 # install PMIX
 $ALMA_COMMON_DIR/install_pmix.sh
 
