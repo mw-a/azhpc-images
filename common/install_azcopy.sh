@@ -12,7 +12,7 @@ TARBALL="azcopy_linux_amd64_$azcopy_version.tar.gz"
 AZCOPY_DOWNLOAD_URL="https://azcopyvnext.azureedge.net/releases/release-${azcopy_release}/${TARBALL}"
 
 ${COMMON_DIR}/download_and_verify.sh ${AZCOPY_DOWNLOAD_URL} ${azcopy_sha256}
-tar -xvf ${TARBALL}
+tar -xf ${TARBALL}
 
 # copy the azcopy to the bin path
 pushd azcopy_linux_amd64_${azcopy_version}

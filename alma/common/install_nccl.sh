@@ -19,7 +19,7 @@ yum install -y rpm-build rpmdevtools
 
 pushd /tmp
 wget ${NCCL_DOWNLOAD_URL}
-tar -xvf ${TARBALL}
+tar -xf ${TARBALL}
 
 pushd nccl-${NCCL_VERSION}
 make -j src.build
