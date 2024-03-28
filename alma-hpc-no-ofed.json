@@ -1,0 +1,49 @@
+{
+  "type": "Microsoft.VirtualMachineImages",
+  "apiVersion": "2022-02-14",
+  "location": "westeurope",
+  "dependsOn": [],
+  "tags": { },
+  "identity": {
+    "type": "UserAssigned",
+    "userAssignedIdentities": {
+      "/subscriptions/5df6e495-3c4c-4982-85d1-b3a279f4c904/resourcegroups/sc-rg-test-vm-image-builder/providers/Microsoft.ManagedIdentity/userAssignedIdentities/sc-mi-test-vm-image-builder": {}
+    }
+  },
+  "properties": {
+    "buildTimeoutInMinutes": 120,
+    "vmProfile": {
+      "vmSize": "Standard_D16ls_v5",
+      "osDiskSizeGB": 60
+    },
+    "source": {
+      "type": "PlatformImage",
+      "publisher": "almalinux",
+      "offer": "almalinux-x86_64",
+      "sku": "8_7-gen2",
+      "version": "latest"
+    },
+    "customize": [
+      {
+        "type": "Shell",
+        "name": "install",
+        "inline": [
+          "sudo dnf install -y git",
+          "git clone -b alma-no-ofed --depth 1 --single-branch https://github.com/mw-a/azhpc-images",
+          "cd azhpc-images/alma/alma-8.x/alma-8.7-hpc && sudo ./install.sh"
+        ]
+      }
+    ],
+    "distribute": [
+      {
+        "type": "SharedImage",
+        "galleryImageId": "/subscriptions/5df6e495-3c4c-4982-85d1-b3a279f4c904/resourceGroups/sc-rg-test-vm-image-builder/providers/Microsoft.Compute/galleries/scigtestvmimagebuilder/images/sc-vi-alma-hpc",
+        "runOutputName": "sc-dt-test-vm-image-builder-sig",
+        "artifactTags": {},
+        "replicationRegions": [
+          "westeurope"
+        ]
+      }
+    ]
+  }
+}
