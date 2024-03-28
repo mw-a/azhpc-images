@@ -42,7 +42,7 @@ if [[ $DISTRIBUTION == "ubuntu26.04" ]]; then
     NCCL_VERSION=$(dpkg-query -W -f='${Version}' libnccl2 | sed 's/+cuda.*//')
 else
     download_and_verify ${NCCL_DOWNLOAD_URL} ${NCCL_SHA256}
-    tar -xvf ${TARBALL}
+    tar -xf ${TARBALL}
 
     pushd nccl-${NCCL_VERSION}
     make -j ${MAKE_JOBS} src.build

@@ -17,7 +17,7 @@ AOCL_DOWNLOAD_URL=https://download.amd.com/developer/eula/aocl/aocl-${AOCL_FOLDE
 AOCL_FOLDER=$(basename $AOCL_TARBALL .tar.gz)
 
 download_and_verify $AOCL_DOWNLOAD_URL $AOCL_SHA256
-tar -xvf ${AOCL_TARBALL}
+tar -xf ${AOCL_TARBALL}
 
 pushd ${AOCL_FOLDER}
 ./install.sh -t amd -l blis fftw libflame -i lp64
@@ -58,7 +58,7 @@ AOCC_DOWNLOAD_URL=https://download.amd.com/developer/eula/aocc/aocc-${AOCC_FOLDE
 AOCC_FOLDER=$(basename $AOCC_TARBALL .tar)
 
 download_and_verify $AOCC_DOWNLOAD_URL $AOCC_SHA256
-tar -xvf ${AOCC_TARBALL}
+tar -xf ${AOCC_TARBALL}
 
 pushd ${AOCC_FOLDER}
 ./install.sh
