@@ -21,16 +21,29 @@ if [[ "$#" -gt 0 ]]; then
     fi
 fi
 
+export IB=DOCA
+if [[ "$#" -gt 2 ]]; then
+    IB=$3
+    if [ "$IB" != "DOCA" -a "$IB" != "STOCK" ]; then
+        echo "Error: Invalid Infiniband type. Only 'DOCA' and 'STOCK' are implemented for this OS."
+	exit 1
+    fi
+fi
+
 source ../../utils/set_properties.sh
 
 ./install_utils.sh
 
 # install DOCA OFED
-$COMPONENT_DIR/install_doca.sh
+if [ "$IB" = DOCA ] ; then
+	$COMPONENT_DIR/install_doca.sh
+	$COMPONENT_DIR/fix_cifs.sh
+else
+	$COMPONENT_DIR/install_stockib.sh
+fi
 
 $COMPONENT_DIR/install_adprereq.sh
 $COMPONENT_DIR/install_applprereq.sh
-$COMPONENT_DIR/fix_cifs.sh
 
 # install PMIX
 $COMPONENT_DIR/install_pmix.sh
