@@ -14,7 +14,7 @@ TARBALL=$(basename $LIBFABRIC_DOWNLOAD_URL)
 LIBFABRIC_FOLDER=$(basename $LIBFABRIC_DOWNLOAD_URL .tar.bz2)
 
 download_and_verify ${LIBFABRIC_DOWNLOAD_URL} ${LIBFABRIC_SHA256}
-tar -xvf ${TARBALL}
+tar -xf ${TARBALL}
 cd ${LIBFABRIC_FOLDER}
 
 # Build with tcp, verbs, shm providers. Disable psm3 — it hangs on MANA-only systems.

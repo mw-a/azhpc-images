@@ -44,7 +44,7 @@ else
     # Update WALinuxAgent - for IPoIB support
     DOWNLOAD_URL=https://github.com/Azure/WALinuxAgent/archive/refs/tags/v${WAAGENT_VERSION}.tar.gz
     download_and_verify ${DOWNLOAD_URL} ${WAAGENT_SHA256}
-    tar -xvf $(basename ${DOWNLOAD_URL})
+    tar -xf $(basename ${DOWNLOAD_URL})
     pushd WALinuxAgent-${WAAGENT_VERSION}/
 
     if [[ $DISTRIBUTION == almalinux8.10 ]] || [[ $DISTRIBUTION == rocky8.10 ]] || [[ $DISTRIBUTION == rhel8* ]]; then

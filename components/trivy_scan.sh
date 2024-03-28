@@ -42,7 +42,7 @@ mkdir -p "${TRIVY_REPORT_DIRNAME}"
 TARFILE="trivy_${TRIVY_VERSION}_${TRIVY_ARCH}.tar.gz"
 wget "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${TARFILE}" -O "${TARFILE}"
 mkdir -p trivy
-tar -xvzf "${TARFILE}" -C trivy
+tar -xzf "${TARFILE}" -C trivy
 rm "${TARFILE}"
 chmod a+x trivy/trivy
 

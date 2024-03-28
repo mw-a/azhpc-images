@@ -16,7 +16,7 @@ AZHC_DOWNLOAD_URL=https://github.com/Azure/azurehpc-health-checks/archive/refs/t
 download_and_verify ${AZHC_DOWNLOAD_URL} ${AZHC_SHA} $DEST_TEST_DIR
 
 pushd $DEST_TEST_DIR
-mkdir azurehpc-health-checks && tar -xvf $TARBALL --strip-components=1 -C azurehpc-health-checks  
+mkdir azurehpc-health-checks && tar -xf $TARBALL --strip-components=1 -C azurehpc-health-checks  
 pushd azurehpc-health-checks
 rm ./triggerGHR/triggerGHR.sh
 cp $COMPONENT_DIR/trigger_aznhc_GHR.sh ./triggerGHR/triggerGHR.sh

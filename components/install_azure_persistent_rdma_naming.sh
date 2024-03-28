@@ -16,7 +16,7 @@ RDMA_CORE_DOWNLOAD_URL=https://github.com/linux-rdma/rdma-core/archive/refs/tags
 download_and_verify ${RDMA_CORE_DOWNLOAD_URL} ${RDMA_CORE_SHA} /tmp
 
 pushd /tmp
-mkdir rdma-core && tar -xvf $TARBALL --strip-components=1 -C rdma-core 
+mkdir rdma-core && tar -xf $TARBALL --strip-components=1 -C rdma-core 
 
 pushd rdma-core
 bash build.sh

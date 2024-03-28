@@ -29,7 +29,7 @@ fi
 
 pushd /tmp
 wget ${NCCL_DOWNLOAD_URL}
-tar -xvf ${TARBALL}
+tar -xf ${TARBALL}
 
 pushd nccl-${NCCL_VERSION}
 make -j $(( $(nproc) - 1 )) src.build

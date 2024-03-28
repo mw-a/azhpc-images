@@ -22,7 +22,7 @@ write_component_version "CUDA" ${CUDA_DRIVER_VERSION}
 TARBALL="v${CUDA_SAMPLES_VERSION}.tar.gz"
 CUDA_SAMPLES_DOWNLOAD_URL=https://github.com/NVIDIA/cuda-samples/archive/refs/tags/${TARBALL}
 download_and_verify ${CUDA_SAMPLES_DOWNLOAD_URL} ${CUDA_SAMPLES_SHA256}
-tar -xvf ${TARBALL}
+tar -xf ${TARBALL}
 pushd ./cuda-samples-${CUDA_SAMPLES_VERSION}
 make -j $(nproc)
 mv -vT ./Samples /usr/local/cuda-${CUDA_DRIVER_VERSION}/samples # Use the same version as the CUDA toolkit as thats where samples is being moved to

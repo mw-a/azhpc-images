@@ -24,7 +24,7 @@ MONEO_DOWNLOAD_URL=https://github.com/Azure/Moneo/archive/refs/tags/${TARBALL}
 download_and_verify ${MONEO_DOWNLOAD_URL} ${MONEO_SHA256} $MONITOR_DIR
 
 pushd $MONITOR_DIR
-    mkdir Moneo && tar -xvf $TARBALL --strip-components=1 -C Moneo  
+    mkdir Moneo && tar -xf $TARBALL --strip-components=1 -C Moneo  
     chmod 777 Moneo
     pushd Moneo/linux_service
         ./configure_service.sh   

@@ -30,7 +30,7 @@ TARBALL=$(basename $HPCX_DOWNLOAD_URL)
 HPCX_FOLDER=$(basename $HPCX_DOWNLOAD_URL .tbz)
 
 download_and_verify ${HPCX_DOWNLOAD_URL} ${HPCX_SHA256}
-tar -xvf ${TARBALL}
+tar -xf ${TARBALL}
 
 mv ${HPCX_FOLDER} ${INSTALL_PREFIX}
 HPCX_PATH=${INSTALL_PREFIX}/${HPCX_FOLDER}
@@ -110,7 +110,7 @@ if ! [[ ("${DISTRIBUTION}" == "ubuntu24.04" || "${DISTRIBUTION}" == "azurelinux3
     MVAPICH_FOLDER=$(basename $MVAPICH_DOWNLOAD_URL .tar.gz)
 
     download_and_verify $MVAPICH_DOWNLOAD_URL $MVAPICH_SHA256
-    tar -xvf ${TARBALL}
+    tar -xf ${TARBALL}
     pushd ${MVAPICH_FOLDER}
     # Error exclusive to Ubuntu 22.04
     # configure: error: The Fortran compiler gfortran will not compile files that call
@@ -144,7 +144,7 @@ TARBALL=$(basename $OMPI_DOWNLOAD_URL)
 OMPI_FOLDER=$(basename $OMPI_DOWNLOAD_URL .tar.gz)
 
 download_and_verify $OMPI_DOWNLOAD_URL $OMPI_SHA256
-tar -xvf $TARBALL
+tar -xf $TARBALL
 cd $OMPI_FOLDER
 if [[ $DISTRIBUTION == "azurelinux3.0" || "${TARGET_NODE_TYPE:-azure_vm_regular}" == "baremetal_3p" ]]; then
     PMIX_FLAG="--with-pmix"
