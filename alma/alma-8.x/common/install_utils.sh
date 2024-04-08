@@ -19,6 +19,9 @@ $COMMON_DIR/download_and_verify.sh $pssh_download_url $pssh_sha256
 yum install -y  pssh-$pssh_version.el8.noarch.rpm
 rm -f pssh-$pssh_version.el8.noarch.rpm
 
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+yum localinstall epel-release-latest-8.noarch.rpm -y
+
 # Install pre-reqs and development tools
 yum groupinstall -y "Development Tools"
 yum install -y numactl \
