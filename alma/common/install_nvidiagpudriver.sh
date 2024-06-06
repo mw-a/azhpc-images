@@ -35,10 +35,14 @@ nvidia_metadata=$(get_component_config "nvidia")
 nvidia_driver_metadata=$(jq -r '.driver' <<< $nvidia_metadata)
 NVIDIA_DRIVER_VERSION=$(jq -r '.version' <<< $nvidia_driver_metadata)
 NVIDIA_DRIVER_SHA256=$(jq -r '.sha256' <<< $nvidia_driver_metadata)
-NVIDIA_DRIVER_URL=https://us.download.nvidia.com/tesla/${NVIDIA_DRIVER_VERSION}/NVIDIA-Linux-x86_64-${NVIDIA_DRIVER_VERSION}.run
+#NVIDIA_DRIVER_URL=https://us.download.nvidia.com/tesla/${NVIDIA_DRIVER_VERSION}/NVIDIA-Linux-x86_64-${NVIDIA_DRIVER_VERSION}.run
+# https://learn.microsoft.com/en-us/azure/virtual-machines/linux/n-series-driver-setup points to
+# https://download.microsoft.com/download/c5319e92-672e-4067-8d85-ab66a7a64db3/NVIDIA-Linux-x86_64-550.144.06-grid-azure.run
+# https://github.com/Azure/azhpc-extensions/blob/master/NvidiaGPU/resources.json which seems to be the authoritative source on this
+NVIDIA_DRIVER_URL=https://download.microsoft.com/download/c5319e92-672e-4067-8d85-ab66a7a64db3/NVIDIA-Linux-x86_64-${NVIDIA_DRIVER_VERSION}-grid-azure.run
 
 $COMMON_DIR/download_and_verify.sh $NVIDIA_DRIVER_URL ${NVIDIA_DRIVER_SHA256}
-bash NVIDIA-Linux-x86_64-${NVIDIA_DRIVER_VERSION}.run --silent --dkms
+bash NVIDIA-Linux-x86_64-${NVIDIA_DRIVER_VERSION}-grid-azure.run --silent --dkms
 dkms install --no-depmod -m nvidia -v ${NVIDIA_DRIVER_VERSION} -k `uname -r` --force
 $COMMON_DIR/write_component_version.sh "NVIDIA" ${NVIDIA_DRIVER_VERSION}
 

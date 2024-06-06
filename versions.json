@@ -112,8 +112,8 @@
         },
         "almalinux8.7": {
             "driver": {
-                "version": "560.35.03",
-                "sha256": "f2932c92fadd43c5b2341be453fc4f73f0ad7185c26bb7a43fbde81ae29f1fe3"
+                "version": "550.144.06",
+                "sha256": "38a71d7e366b68348531f5fc4d2c2082629a21755b0320104e070ac51d64eaac"
             },
             "fabricmanager": {
                 "distribution": "rhel8",
@@ -123,8 +123,8 @@
         },
         "almalinux8.10": {
             "driver": {
-                "version": "570.133.20",
-                "sha256": "1253d17b1528e8a24bf1f34a8ac6591c924b98ad7a32344bde253aa622ac1605"
+                "version": "550.144.06",
+                "sha256": "38a71d7e366b68348531f5fc4d2c2082629a21755b0320104e070ac51d64eaac"
             },
             "fabricmanager": {
                 "distribution": "rhel8",
