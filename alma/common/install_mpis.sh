@@ -27,7 +27,8 @@ HPCX_FOLDER=$(basename $HPCX_DOWNLOAD_URL .tbz)
 $COMMON_DIR/download_and_verify.sh ${HPCX_DOWNLOAD_URL} ${HPCX_SHA256}
 tar -xf ${TARBALL}
 
-sed -i "s/\/build-result\//\/opt\//" ${HPCX_FOLDER}/hcoll/lib/pkgconfig/hcoll.pc
+sed -i "s/-L\${libdir}/-Wl,-rpath,\${libdir} -L\${libdir}/" ${HPCX_FOLDER}/hcoll/lib/pkgconfig/hcoll.pc
+sed -i "s/\/build-result\//\/opt\//" $(find ${HPCX_FOLDER} -name "*.pc" -exec grep -l build-result {} \;)
 mv ${HPCX_FOLDER} ${INSTALL_PREFIX}
 HPCX_PATH=${INSTALL_PREFIX}/${HPCX_FOLDER}
 HCOLL_PATH=${HPCX_PATH}/hcoll
