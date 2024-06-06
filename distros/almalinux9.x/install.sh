@@ -28,6 +28,8 @@ source ../../utils/set_properties.sh
 # install DOCA OFED
 $COMPONENT_DIR/install_doca.sh
 
+$COMPONENT_DIR/install_adprereq.sh
+
 # install PMIX
 $COMPONENT_DIR/install_pmix.sh
 
