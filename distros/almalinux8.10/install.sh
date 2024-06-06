@@ -34,6 +34,8 @@ $COMPONENT_DIR/install_doca.sh
 # Install CUDA before MPI so HPC-X can rebuild Open MPI with CUDA support.
 $COMPONENT_DIR/install_nvidiagpudriver.sh
 
+$COMPONENT_DIR/install_adprereq.sh
+
 # install PMIX
 $COMPONENT_DIR/install_pmix.sh
 
