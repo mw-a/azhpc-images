@@ -30,6 +30,7 @@ $ALMA_COMMON_DIR/install_lustre_client.sh "8"
 #$ALMA_COMMON_DIR/install_doca.sh
 
 ./install_rhelofed.sh
+./install_oodprereq.sh
 
 # install PMIX
 $ALMA_COMMON_DIR/install_pmix.sh
@@ -83,7 +84,7 @@ $COMMON_DIR/install_hpcdiag.sh
 $COMMON_DIR/install_monitoring_tools.sh
 
 # install Azure/NHC Health Checks
-$COMMON_DIR/install_health_checks.sh
+#$COMMON_DIR/install_health_checks.sh
 
 # copy test file
 $COMMON_DIR/copy_test_file.sh

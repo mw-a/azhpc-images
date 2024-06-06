@@ -2,20 +2,20 @@
 set -ex
 
 # Install Moby Engine + CLI
-yum install -y moby-engine
-yum install -y moby-cli
+#yum install -y moby-engine
+#yum install -y moby-cli
 
 $ALMA_COMMON_DIR/install_nvidia_container_toolkit.sh
 
 # enable and restart the docker daemon to complete the installation
-systemctl enable docker
-systemctl restart docker
+#systemctl enable docker
+#systemctl restart docker
 
 # restart containerd service
-systemctl restart containerd
+#systemctl restart containerd
 
 # status of containerd snapshotter plugins
-ctr plugin ls
+#ctr plugin ls
 
 # Write the docker version to components file
 docker_version=$(docker --version | awk -F' ' '{print $3}')
