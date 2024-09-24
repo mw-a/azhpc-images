@@ -6,7 +6,7 @@ dnf install -y epel-release
 dnf groupinstall -y xfce
 wget https://raw.githubusercontent.com/TurboVNC/repo/main/TurboVNC.repo -O /etc/yum.repos.d/TurboVNC.repo
 wget https://virtualgl.com/pmwiki/uploads/Downloads/VirtualGL.repo -O /etc/yum.repos.d/VirtualGL.repo
-dnf install --enablerepo=powertools -y turbovnc git VirtualGL turbojpeg xorg-x11-apps nmap
+dnf install --enablerepo=powertools -y turbovnc git VirtualGL turbojpeg xorg-x11-apps nmap chromium
 # no group for mate in EPEL - extracted from Fedora 40 comps.xml
 dnf install --enablerepo=powertools -y atril atril-caja atril-thumbnailer caja caja-actions caja-image-converter \
 	caja-open-terminal caja-sendto caja-wallpaper caja-xattr-tags engrampa eom marco \
