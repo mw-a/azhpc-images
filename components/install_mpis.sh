@@ -13,6 +13,7 @@ INSTALL_PREFIX=/opt
 MPI_MODULE_FILES_DIRECTORY=${MODULE_FILES_DIRECTORY}/mpi
 mkdir -p ${MPI_MODULE_FILES_DIRECTORY}
 
+if [ "$IB" = DOCA ] ; then
 if [[ "$GPU" == "AMD" ]]; then
     # AMD has regression on higher versions of HPC-X
     hpcx_metadata=$(get_component_config "hpcx_amd")
@@ -241,7 +242,12 @@ if [[ $DISTRIBUTION == almalinux* ]] || [[ $DISTRIBUTION == rocky* ]] || [[ $DIS
     # exclude ucx from updates
     dnf_pin_packages "ucx*"
 fi
+else
+	# stock IB stack
+	dnf install -y ucx-rdmacm ucx-ib ucx-devel
+fi
 
+if [ "$IB" = DOCA ] ; then
 # HPC-X
 # mpi/hpcx is the public HPC-X entrypoint.
 if [[ "$REBUILD_HPCX" == true ]]; then
@@ -277,6 +283,7 @@ ln -s ${MPI_MODULE_FILES_DIRECTORY}/hpcx-${HPCX_VERSION} ${MPI_MODULE_FILES_DIRE
 
 ln -s ${MPI_MODULE_FILES_DIRECTORY}/hpcx-${HPCX_VERSION} ${MPI_MODULE_FILES_DIRECTORY}/hpcx
 ln -s ${MPI_MODULE_FILES_DIRECTORY}/hpcx-pmix-${HPCX_VERSION} ${MPI_MODULE_FILES_DIRECTORY}/hpcx-pmix
+fi
 
 # Install MVAPICH
 # Skips:
@@ -369,6 +376,7 @@ if [[ "$DISTRIBUTION" != "ubuntu26.04" ]]; then
     download_and_verify $OMPI_DOWNLOAD_URL $OMPI_SHA256
     tar -xf $TARBALL
     cd $OMPI_FOLDER
+if [ "$IB" = DOCA ] ; then
     if [[ "$USE_INTERNAL_PMIX" == true ]]; then
         PMIX_FLAG="${OMPI_DEPS_ARGS[*]}"
     elif [[ $DISTRIBUTION == "azurelinux3.0" || "${TARGET_NODE_TYPE:-azure_vm_regular}" == "baremetal_3p" ]]; then
@@ -386,6 +394,9 @@ if [[ "$DISTRIBUTION" != "ubuntu26.04" ]]; then
         ./configure --prefix=${INSTALL_PREFIX}/openmpi-${OMPI_VERSION} --without-ucx --with-ofi=${LIBFABRIC_PATH} ${PMIX_FLAG} --enable-mpirun-prefix-by-default
         OMPI_TRANSPORT_LIB_PATH="${LIBFABRIC_PATH}/lib"
     fi
+else
+	./configure --prefix=${INSTALL_PREFIX}/openmpi-${OMPI_VERSION} --enable-mpirun-prefix-by-default
+fi
     make -j$(nproc)
     make install
     cd ..
@@ -421,8 +432,13 @@ EOF
 fi
 
 if [[ $DISTRIBUTION == almalinux* ]] || [[ $DISTRIBUTION == rocky* ]] || [[ $DISTRIBUTION == rhel* ]] || [[ $DISTRIBUTION == "azurelinux3.0" ]]; then
+if [ "$IB" = DOCA ] ; then
     # exclude openmpi, perftest from updates
     dnf_pin_packages "openmpi" "perftest"
+else
+	# stock IB stack
+	dnf install -y openmpi-devel
+fi
 fi
 
 if [[ "$ARCHITECTURE" != "aarch64" ]]; then

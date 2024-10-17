@@ -79,7 +79,7 @@ else
 fi
 
 # Install the nccl rdma sharp plugin. Skip for non-IB SKUs (no DOCA-OFED, no SHARP, no GPUDirect RDMA)
-if [[ "$(sku_network_mode)" == "standard_ib" ]]; then
+if [ "$IB" = DOCA ] && [[ "$(sku_network_mode)" == "standard_ib" ]]; then
     source /etc/profile.d/modules.sh
     module load mpi/hpcx
 
@@ -117,16 +117,16 @@ EOF
 fi
 
 # Build the nccl tests
-source /etc/profile.d/modules.sh
-module load mpi/hpcx
-git clone https://github.com/NVIDIA/nccl-tests.git
-pushd nccl-tests
-write_repo_source_info "NCCL_TESTS" .
-make -j ${MAKE_JOBS} MPI=1 MPI_HOME=${HPCX_MPI_DIR} CUDA_HOME=/usr/local/cuda
-popd
-mv nccl-tests /opt/.
-module unload mpi/hpcx
-popd
+#source /etc/profile.d/modules.sh
+#module load mpi/hpcx
+#git clone https://github.com/NVIDIA/nccl-tests.git
+#pushd nccl-tests
+#write_repo_source_info "NCCL_TESTS" .
+#make -j ${MAKE_JOBS} MPI=1 MPI_HOME=${HPCX_MPI_DIR} CUDA_HOME=/usr/local/cuda
+#popd
+#mv nccl-tests /opt/.
+#module unload mpi/hpcx
+#popd
 
 write_component_version "NCCL" ${NCCL_VERSION}
 

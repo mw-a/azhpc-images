@@ -46,8 +46,13 @@ download_and_verify "${MPIFILEUTILS_URL}" "${MPIFILEUTILS_SHA256}"
 tar -xzf "${TARBALL}"
 
 # Load HPC-X MPI for building
+if [ "$IB" = "DOCA" ] ; then 
 source /etc/profile.d/modules.sh
 module load mpi/hpcx
+else
+	save_PATH=$PATH
+	export PATH=/usr/lib64/openmpi/bin:$PATH
+fi
 
 # Build with CMake
 cd "${BUILD_DIR}"
@@ -62,7 +67,12 @@ cmake "${SRC_DIR}/mpifileutils-v${MPIFILEUTILS_VERSION}" \
 make -j$(nproc)
 make install
 
+if [ "$IB" = "DOCA" ] ; then
 module unload mpi/hpcx
+else
+	export PATH=$save_PATH
+	unset save_PATH
+fi
 
 # Cleanup build artifacts
 rm -rf "${BUILD_DIR}" "${SRC_DIR}"
