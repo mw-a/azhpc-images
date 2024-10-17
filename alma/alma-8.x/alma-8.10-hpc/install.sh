@@ -27,7 +27,16 @@ $ALMA_COMMON_DIR/install_lustre_client.sh "8"
 ./install_gcc.sh
 
 # install DOCA OFED
-$ALMA_COMMON_DIR/install_doca.sh
+#$ALMA_COMMON_DIR/install_doca.sh
+
+$ALMA_COMMON_DIR/install_rhelofed.sh
+$ALMA_COMMON_DIR/install_adprereq.sh
+$ALMA_COMMON_DIR/install_oodprereq.sh
+$ALMA_COMMON_DIR/install_cdtngprereq.sh
+$ALMA_COMMON_DIR/install_scsubprereq.sh
+$ALMA_COMMON_DIR/install_numecaprereq.sh
+$ALMA_COMMON_DIR/install_ansysprereq.sh
+$ALMA_COMMON_DIR/install_admin_tools.sh
 
 # install PMIX
 $ALMA_COMMON_DIR/install_pmix.sh
@@ -81,7 +90,7 @@ $COMMON_DIR/install_hpcdiag.sh
 $COMMON_DIR/install_monitoring_tools.sh
 
 # install Azure/NHC Health Checks
-$COMMON_DIR/install_health_checks.sh
+#$COMMON_DIR/install_health_checks.sh
 
 # copy test file
 $COMMON_DIR/copy_test_file.sh

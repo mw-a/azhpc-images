@@ -29,14 +29,14 @@ $ALMA_COMMON_DIR/install_lustre_client.sh "8"
 # install DOCA OFED
 #$ALMA_COMMON_DIR/install_doca.sh
 
-./install_rhelofed.sh
-./install_adprereq.sh
-./install_oodprereq.sh
-./install_cdtngprereq.sh
-./install_scsubprereq.sh
-./install_numecaprereq.sh
-./install_ansysprereq.sh
-./install_admin_tools.sh
+$ALMA_COMMON_DIR/install_rhelofed.sh
+$ALMA_COMMON_DIR/install_adprereq.sh
+$ALMA_COMMON_DIR/install_oodprereq.sh
+$ALMA_COMMON_DIR/install_cdtngprereq.sh
+$ALMA_COMMON_DIR/install_scsubprereq.sh
+$ALMA_COMMON_DIR/install_numecaprereq.sh
+$ALMA_COMMON_DIR/install_ansysprereq.sh
+$ALMA_COMMON_DIR/install_admin_tools.sh
 
 # install PMIX
 $ALMA_COMMON_DIR/install_pmix.sh
