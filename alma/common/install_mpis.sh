@@ -12,6 +12,7 @@ set GCC=/opt/${GCC_VERSION}/bin/gcc
 
 INSTALL_PREFIX=/opt
 
+dont_install_hpcx() {
 pmix_metadata=$(get_component_config "pmix")
 PMIX_VERSION=$(jq -r '.version' <<< $pmix_metadata)
 PMIX_PATH=${INSTALL_PREFIX}/pmix/${PMIX_VERSION:0:-2}
@@ -41,6 +42,9 @@ cp -r ${HPCX_PATH}/ompi/tests ${HPCX_PATH}/hpcx-rebuild
 
 # exclude ucx from updates
 sed -i "$ s/$/ ucx*/" /etc/dnf/dnf.conf
+}
+
+dnf install -y ucx-rdmacm ucx-ib ucx-devel
 
 # Install MVAPICH2
 mvapich2_metadata=$(get_component_config "mvapich2")
@@ -69,7 +73,7 @@ OMPI_FOLDER=$(basename $OMPI_DOWNLOAD_URL .tar.gz)
 $COMMON_DIR/download_and_verify.sh $OMPI_DOWNLOAD_URL $OMPI_SHA256
 tar -xf $TARBALL
 cd $OMPI_FOLDER
-./configure --prefix=${INSTALL_PREFIX}/openmpi-${OMPI_VERSION} --with-ucx=${UCX_PATH} --with-hcoll=${HCOLL_PATH} --with-pmix=${PMIX_PATH} --enable-mpirun-prefix-by-default --with-platform=contrib/platform/mellanox/optimized
+./configure --prefix=${INSTALL_PREFIX}/openmpi-${OMPI_VERSION} --enable-mpirun-prefix-by-default
 make -j$(nproc) 
 make install
 cd ..
@@ -96,6 +100,7 @@ $COMMON_DIR/write_component_version.sh "IMPI" ${IMPI_VERSION}
 MPI_MODULE_FILES_DIRECTORY=${MODULE_FILES_DIRECTORY}/mpi
 mkdir -p ${MPI_MODULE_FILES_DIRECTORY}
 
+dont_install_hpcx_module_files() {
 # HPC-X
 cat << EOF >> ${MPI_MODULE_FILES_DIRECTORY}/hpcx-${HPCX_VERSION}
 #%Module 1.0
@@ -115,6 +120,7 @@ cat << EOF >> ${MPI_MODULE_FILES_DIRECTORY}/hpcx-pmix-${HPCX_VERSION}
 conflict        mpi
 module load ${HPCX_PATH}/modulefiles/hpcx-rebuild
 EOF
+}
 
 # MVAPICH2
 cat << EOF >> ${MPI_MODULE_FILES_DIRECTORY}/mvapich2-${MVAPICH2_VERSION}
@@ -167,12 +173,14 @@ setenv          MPI_MAN         /opt/intel/oneapi/mpi/${impi_2021_version}/share
 setenv          MPI_HOME        /opt/intel/oneapi/mpi/${impi_2021_version}
 EOF
 
+dont_create_hpcx_module_file_symlinks() {
 # Create symlinks for modulefiles
 ln -s ${MPI_MODULE_FILES_DIRECTORY}/hpcx-${HPCX_VERSION} ${MPI_MODULE_FILES_DIRECTORY}/hpcx
 ln -s ${MPI_MODULE_FILES_DIRECTORY}/hpcx-pmix-${HPCX_VERSION} ${MPI_MODULE_FILES_DIRECTORY}/hpcx-pmix
 ln -s ${MPI_MODULE_FILES_DIRECTORY}/mvapich2-${MVAPICH2_VERSION} ${MPI_MODULE_FILES_DIRECTORY}/mvapich2
 ln -s ${MPI_MODULE_FILES_DIRECTORY}/openmpi-${OMPI_VERSION} ${MPI_MODULE_FILES_DIRECTORY}/openmpi
 ln -s ${MPI_MODULE_FILES_DIRECTORY}/impi_${impi_2021_version} ${MPI_MODULE_FILES_DIRECTORY}/impi-2021
+}
 
 # cleanup downloaded tarballs and other installation files/folders
 rm -rf *.tbz *.tar.gz *offline.sh
