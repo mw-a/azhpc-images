@@ -9,6 +9,7 @@ set GCC=/usr/bin/gcc
 
 INSTALL_PREFIX=/opt
 
+if [ "$IB" = DOCA ] ; then
 pmix_metadata=$(get_component_config "pmix")
 PMIX_VERSION=$(jq -r '.version' <<< $pmix_metadata)
 PMIX_PATH=${INSTALL_PREFIX}/pmix/${PMIX_VERSION:0:-2}
@@ -97,6 +98,10 @@ if [[ $DISTRIBUTION == almalinux* ]] || [[ $DISTRIBUTION == rocky* ]] || [[ $DIS
     # exclude ucx from updates
     dnf_pin_packages "ucx*"
 fi
+else
+	# stock IB stack
+	dnf install -y ucx-rdmacm ucx-ib ucx-devel
+fi
 
 # Install MVAPICH
 # Skip on GB-family nodes (ubuntu24.04 and azurelinux3.0) — MVAPICH is not supported
@@ -121,7 +126,10 @@ if ! [[ ("${DISTRIBUTION}" == "ubuntu24.04" || "${DISTRIBUTION}" == "azurelinux3
     # linker finds the matching libucs/libuct/libucp (or libfabric) at runtime instead of
     # the system DOCA-OFED copy from /etc/ld.so.cache, which has a different ABI when
     # HPC-X is pinned to an older release (e.g. AMD GPU images on HPC-X 2.18).
-    if sku_uses_ucx; then
+    if [ "$IB" != DOCA ] ; then
+        mvapich_transport_args="--with-ucx"
+        MVAPICH_TRANSPORT_LIB_PATH="/usr/lib64"
+    elif sku_uses_ucx; then
         mvapich_transport_args="--with-ucx=${UCX_PATH}"
         MVAPICH_TRANSPORT_LIB_PATH="${UCX_PATH}/lib"
     else
@@ -146,6 +154,7 @@ OMPI_FOLDER=$(basename $OMPI_DOWNLOAD_URL .tar.gz)
 download_and_verify $OMPI_DOWNLOAD_URL $OMPI_SHA256
 tar -xf $TARBALL
 cd $OMPI_FOLDER
+if [ "$IB" = DOCA ] ; then
 if [[ $DISTRIBUTION == "azurelinux3.0" || "${TARGET_NODE_TYPE:-azure_vm_regular}" == "baremetal_3p" ]]; then
     PMIX_FLAG="--with-pmix"
 else
@@ -161,14 +170,22 @@ else
     ./configure --prefix=${INSTALL_PREFIX}/openmpi-${OMPI_VERSION} --without-ucx --with-ofi=${LIBFABRIC_PATH} ${PMIX_FLAG} --enable-mpirun-prefix-by-default
     OMPI_TRANSPORT_LIB_PATH="${LIBFABRIC_PATH}/lib"
 fi
+else
+	./configure LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${HCOLL_PATH}/lib --prefix=${INSTALL_PREFIX}/openmpi-${OMPI_VERSION} --enable-mpirun-prefix-by-default
+fi
 make -j$(nproc) 
 make install
 cd ..
 write_component_version "OMPI" ${OMPI_VERSION}
 
 if [[ $DISTRIBUTION == almalinux* ]] || [[ $DISTRIBUTION == rocky* ]] || [[ $DISTRIBUTION == rhel* ]] || [[ $DISTRIBUTION == "azurelinux3.0" ]]; then
+	if [ "$IB" = DOCA ] ; then
     # exclude openmpi, perftest from updates
     dnf_pin_packages "openmpi" "perftest"
+	else
+		# stock IB stack
+		dnf install -y openmpi-devel
+	fi
 fi
 
 if [[ "$ARCHITECTURE" != "aarch64" ]]; then
@@ -191,6 +208,7 @@ fi
 MPI_MODULE_FILES_DIRECTORY=${MODULE_FILES_DIRECTORY}/mpi
 mkdir -p ${MPI_MODULE_FILES_DIRECTORY}
 
+if [ "$IB" = DOCA ] ; then
 # HPC-X
 # mpi/hpcx is the public HPC-X entrypoint. Always route it through our rebuilt
 # HPC-X so customers and validation use the same stack we rebuilt above (PMIx,
@@ -230,6 +248,7 @@ conflict        mpi
 module load ${HPCX_PATH}/modulefiles/hpcx-rebuild
 ${HPCX_NON_UCX_EXTRAS}
 EOF
+fi
 
 # MVAPICH
 # On non-UCX SKUs (OFI transport), force the tcp provider (auto-detection picks
@@ -324,9 +343,11 @@ fi
 
 
 
+if [ "$IB" = DOCA ] ; then
 # Create symlinks for modulefiles
 ln -s ${MPI_MODULE_FILES_DIRECTORY}/hpcx-${HPCX_VERSION} ${MPI_MODULE_FILES_DIRECTORY}/hpcx
 ln -s ${MPI_MODULE_FILES_DIRECTORY}/hpcx-pmix-${HPCX_VERSION} ${MPI_MODULE_FILES_DIRECTORY}/hpcx-pmix
+fi
 ln -s ${MPI_MODULE_FILES_DIRECTORY}/openmpi-${OMPI_VERSION} ${MPI_MODULE_FILES_DIRECTORY}/openmpi
 # cleanup downloaded tarballs and other installation files/folders
 rm -rf *.tbz *.tar.gz *offline.sh
