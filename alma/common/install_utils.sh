@@ -17,6 +17,8 @@ $COMMON_DIR/download_and_verify.sh $pssh_download_url $pssh_sha256
 yum install -y  pssh-$pssh_version.el8.noarch.rpm
 rm -f pssh-$pssh_version.el8.noarch.rpm
 
+yum -y update
+
 # Install pre-reqs and development tools
 yum groupinstall -y "Development Tools"
 yum install -y numactl \
@@ -58,11 +60,11 @@ yum install -y environment-modules-5.0.1-1.el9.x86_64.rpm
 rm -f environment-modules-5.0.1-1.el9.x86_64.rpm
 
 ## Disable kernel updates
-echo "exclude=kernel* kmod*" | tee -a /etc/dnf/dnf.conf
+#echo "exclude=kernel* kmod*" | tee -a /etc/dnf/dnf.conf
 
 # Disable dependencies on kernel core
-sed -i "$ s/$/ shim*/" /etc/dnf/dnf.conf
-sed -i "$ s/$/ grub2*/" /etc/dnf/dnf.conf
+#sed -i "$ s/$/ shim*/" /etc/dnf/dnf.conf
+#sed -i "$ s/$/ grub2*/" /etc/dnf/dnf.conf
 
 ## Install dkms from the EPEL repository
 wget -r --no-parent -e robots=off -A "dkms-*.el8.noarch.rpm" https://dl.fedoraproject.org/pub/epel/8/Everything/x86_64/Packages/d/
