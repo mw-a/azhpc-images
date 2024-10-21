@@ -44,8 +44,6 @@ cp -r ${HPCX_PATH}/ompi/tests ${HPCX_PATH}/hpcx-rebuild
 sed -i "$ s/$/ ucx*/" /etc/dnf/dnf.conf
 }
 
-dnf install -y ucx-rdmacm ucx-ib ucx-devel
-
 # Install MVAPICH2
 mvapich2_metadata=$(get_component_config "mvapich2")
 MVAPICH2_VERSION=$(jq -r '.version' <<< $mvapich2_metadata)

@@ -38,6 +38,9 @@ $ALMA_COMMON_DIR/install_numecaprereq.sh
 $ALMA_COMMON_DIR/install_ansysprereq.sh
 $ALMA_COMMON_DIR/install_admin_tools.sh
 
+# add infiniband support for IPoIB (and UCX)
+$ALMA_COMMON_DIR/install_infiniband.sh
+
 # install PMIX
 $ALMA_COMMON_DIR/install_pmix.sh
 
