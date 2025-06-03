@@ -36,6 +36,7 @@ $COMPONENT_DIR/install_nvidiagpudriver.sh
 
 $COMPONENT_DIR/install_adprereq.sh
 $COMPONENT_DIR/install_applprereq.sh
+$COMPONENT_DIR/fix_cifs.sh
 
 # install PMIX
 $COMPONENT_DIR/install_pmix.sh
