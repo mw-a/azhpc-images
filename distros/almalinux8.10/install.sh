@@ -30,6 +30,15 @@ if [[ "$#" -gt 2 ]]; then
     fi
 fi
 
+export VDI=VGL
+if [[ "$#" -gt 3 ]]; then
+    VDI=$4
+    if [ "$VDI" != VGL -a "$VDI" != BASE -a "$VDI" != NONE ]; then
+        echo "Error: Invalid VDI type. Only 'VGL', 'DCV' or 'NONE' are implemented for this OS."
+        exit 1
+    fi
+fi
+
 source ../../utils/set_properties.sh
 
 ./install_utils.sh
@@ -44,6 +53,7 @@ fi
 
 $COMPONENT_DIR/install_adprereq.sh
 $COMPONENT_DIR/install_applprereq.sh
+$COMPONENT_DIR/install_vdiprereq.sh
 
 # install PMIX
 $COMPONENT_DIR/install_pmix.sh
