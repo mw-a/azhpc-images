@@ -29,6 +29,7 @@ source ../../utils/set_properties.sh
 $COMPONENT_DIR/install_doca.sh
 
 $COMPONENT_DIR/install_adprereq.sh
+$COMPONENT_DIR/install_applprereq.sh
 
 # install PMIX
 $COMPONENT_DIR/install_pmix.sh
