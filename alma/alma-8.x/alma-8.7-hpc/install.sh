@@ -32,6 +32,7 @@ $ALMA_COMMON_DIR/install_doca.sh
 $ALMA_COMMON_DIR/install_adprereq.sh
 $ALMA_COMMON_DIR/install_applprereq.sh
 $ALMA_COMMON_DIR/install_vdiprereq.sh
+$ALMA_COMMON_DIR/fix_cifs.sh
 
 # install PMIX
 $ALMA_COMMON_DIR/install_pmix.sh
