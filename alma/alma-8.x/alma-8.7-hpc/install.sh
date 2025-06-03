@@ -54,7 +54,7 @@ rm -Rf -- */
 $ALMA_COMMON_DIR/install_nccl.sh
 
 # Install NVIDIA docker container
-$ALMA_COMMON_DIR/install_docker.sh
+#$ALMA_COMMON_DIR/install_docker.sh
 
 # Install DCGM
 $ALMA_COMMON_DIR/install_dcgm.sh
@@ -81,7 +81,7 @@ $COMMON_DIR/install_hpcdiag.sh
 $COMMON_DIR/install_monitoring_tools.sh
 
 # install Azure/NHC Health Checks
-$COMMON_DIR/install_health_checks.sh
+#$COMMON_DIR/install_health_checks.sh
 
 # copy test file
 $COMMON_DIR/copy_test_file.sh
