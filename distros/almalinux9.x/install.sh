@@ -48,7 +48,7 @@ $COMPONENT_DIR/install_nvidiagpudriver.sh
 $COMPONENT_DIR/install_nccl.sh
 
 # Install NVIDIA docker container
-$COMPONENT_DIR/install_docker.sh
+#$COMPONENT_DIR/install_docker.sh
 
 # Install DCGM
 $COMPONENT_DIR/install_dcgm.sh
@@ -94,7 +94,7 @@ $COMPONENT_DIR/install_azure_persistent_rdma_naming.sh
 $COMPONENT_DIR/copy_test_file.sh
 
 # install Azure/NHC Health Checks
-$COMPONENT_DIR/install_health_checks.sh "$GPU"
+#$COMPONENT_DIR/install_health_checks.sh "$GPU"
 
 # write kernel and OS version metadata
 $COMPONENT_DIR/write_kernel_os_version.sh
