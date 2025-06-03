@@ -30,6 +30,7 @@ $ALMA_COMMON_DIR/install_lustre_client.sh "8"
 $ALMA_COMMON_DIR/install_doca.sh
 
 $ALMA_COMMON_DIR/install_adprereq.sh
+$ALMA_COMMON_DIR/install_applprereq.sh
 
 # install PMIX
 $ALMA_COMMON_DIR/install_pmix.sh
