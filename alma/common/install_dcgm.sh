@@ -5,6 +5,7 @@ source ${COMMON_DIR}/utilities.sh
 
 # Set CUDA version info
 CUDA_VERSION=$(nvidia-smi | sed -E -n 's/.*CUDA Version: ([0-9]+)[.].*/\1/p')
+[ -n "$CUDA_VERSION" ] || CUDA_VERSION="-all"
 
 # Install DCGM
 # Reference: https://developer.nvidia.com/dcgm#Downloads
