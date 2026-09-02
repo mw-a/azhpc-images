@@ -69,7 +69,11 @@ $COMPONENT_DIR/install_lustre_client.sh
 $COMPONENT_DIR/install_mpifileutils.sh
 
 # install nvidia gpu driver
+if [ "$SKU" = "NCv6" ]; then
+	$COMPONENT_DIR/install_nvidiagriddriver.sh
+else
 $COMPONENT_DIR/install_nvidiagpudriver.sh
+fi
 
 # Install NCCL
 $COMPONENT_DIR/install_nccl.sh

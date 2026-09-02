@@ -1077,9 +1077,9 @@
     },
     "nvidia_grid": {
         "common": {
-            "version": "595.91.07",
-            "sha256": "72056e38ee17d86606ebdb97594d01cd1fe64b1fbd7e1a888634fa959529ca0a",
-            "url": "https://download.microsoft.com/download/a7cb6d36-3bbc-43d6-9e88-e0842e6f9ab9/NVIDIA-Linux-x86_64-595.91.07-grid-azure.run"
+            "version": "570.237",
+            "sha256": "1a529dd4d173ba3b36f3c284bb54fce5dd39c9e757856980b8ae0b7798e7764b",
+            "url": "https://download.microsoft.com/download/5e213ec5-834f-4b0a-87f7-772751353b06/NVIDIA-Linux-x86_64-570.237-grid-azure.run"
         }
     }
 }
