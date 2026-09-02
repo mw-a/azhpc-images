@@ -55,7 +55,11 @@ else
 fi
 
 # Install CUDA before MPI so HPC-X can rebuild Open MPI with CUDA support.
+if [ "$SKU" = "NCv6" ]; then
+	$COMPONENT_DIR/install_nvidiagriddriver.sh
+else
 $COMPONENT_DIR/install_nvidiagpudriver.sh
+fi
 
 $COMPONENT_DIR/install_adprereq.sh
 $COMPONENT_DIR/install_applprereq.sh
