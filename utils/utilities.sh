@@ -178,7 +178,7 @@ function _is_mrc_network {
 #   - ib  : regular InfiniBand-capable path
 function sku_network_mode {
     if _is_ncv6_sku; then
-        echo "no_rdma"
+        echo "standard_ib"
     elif _is_mrc_network; then
         echo "mrc"
     else
