@@ -85,7 +85,7 @@ $COMPONENT_DIR/install_nccl.sh
 #$COMPONENT_DIR/install_docker.sh
 
 # Install DCGM
-$COMPONENT_DIR/install_dcgm.sh
+#$COMPONENT_DIR/install_dcgm.sh
 
 # install AMD tuned libraries
 $COMPONENT_DIR/install_amd_libs.sh
