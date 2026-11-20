@@ -30,7 +30,7 @@ cp ./microsoft-rhel-prod.repo /etc/yum.repos.d/
 dnf repolist
 
 # Install Kernel dependencies
-KERNEL=( $(rpm -q kernel | sed 's/kernel\-//g') )
+KERNEL=$(uname -r)
 
 dnf install -y https://repo.almalinux.org/almalinux/8.10/BaseOS/x86_64/os/Packages/kernel-devel-${KERNEL}.rpm \
     https://repo.almalinux.org/almalinux/8.10/BaseOS/x86_64/os/Packages/kernel-headers-${KERNEL}.rpm \
